@@ -13,3 +13,5 @@ admin.site.register(Topic)
 admin.site.register(ProjectAssignment)
 admin.site.register(Work)
 admin.site.register(Grade)
+
+
