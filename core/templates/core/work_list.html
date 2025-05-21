@@ -3,7 +3,7 @@
 {% block header %}Работы студентов{% endblock %}
 
 {% block content %}
-
+<div class="container mt-4">
 <div class="d-flex justify-content-between mb-3">
     <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
     <a href="{% url 'work_create' %}" class="btn btn-secondary">➕ Добавить работу</a>
@@ -40,5 +40,5 @@
         {% endfor %}
     </tbody>
 </table>
-
+</div>
 {% endblock %}

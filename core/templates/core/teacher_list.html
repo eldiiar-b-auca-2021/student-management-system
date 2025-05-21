@@ -2,35 +2,37 @@
 {% block title %}Список преподавателей{% endblock %}
 {% block header %}Список преподавателей{% endblock %}
 {% block content %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
+            <a href="{% url 'teacher_create' %}" class="btn btn-secondary">➕ Добавить преподавателя</a>
+        </div>
 
-    <div class="d-flex justify-content-between mb-3">
-        <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-        <a href="{% url 'teacher_create' %}" class="btn btn-secondary">➕ Добавить преподавателя</a>
-    </div>
-
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>ФИО</th>
-            <th>Контакты</th>
-            <th>Кафедра</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for teacher in teachers %}
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td>{{ teacher.id }}</td>
-                <td>{{ teacher.full_name }}</td>
-                <td>{{ teacher.contacts }}</td>
-                <td>{{ teacher.department }}</td>
-                <td>
-                    <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-sm btn-primary">✏️ Редактировать</a>
-                    <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
-                </td>
+                <th>ID</th>
+                <th>ФИО</th>
+                <th>Контакты</th>
+                <th>Кафедра</th>
+                <th>Действия</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.id }}</td>
+                    <td>{{ teacher.full_name }}</td>
+                    <td>{{ teacher.contacts }}</td>
+                    <td>{{ teacher.department }}</td>
+                    <td>
+                        <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-sm btn-primary">✏️
+                            Редактировать</a>
+                        <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -9,8 +9,16 @@ from .forms import TeacherForm
 from .models import Teacher
 
 def home(request):
-
-    return render(request, 'core/home.html')
+    sections = [
+        {'title': 'Студенты', 'desc': 'Управление всеми записями студентов.', 'url': 'student_list'},
+        {'title': 'Преподаватели', 'desc': 'Управление данными преподавателей и контактами.', 'url': 'teacher_list'},
+        {'title': 'Проекты', 'desc': 'Отслеживание деталей проектов и сроков.', 'url': 'project_list'},
+        {'title': 'Темы', 'desc': 'Просмотр и управление темами проектов.', 'url': 'topic_list'},
+        {'title': 'Назначения', 'desc': 'Просмотр назначений проектов студентам.', 'url': 'assignment_list'},
+        {'title': 'Оценки', 'desc': 'История оценивания проектов.', 'url': 'grade_list'},
+        {'title': 'Работы', 'desc': 'Загруженные файлы и ссылки на проекты.', 'url': 'work_list'},
+    ]
+    return render(request, 'core/home.html', {'sections': sections})
 
 
 def student_list(request):
