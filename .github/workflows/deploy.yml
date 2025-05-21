@@ -24,7 +24,7 @@ jobs:
     - name: 🚢 Deploy via SSH
       run: |
         ssh ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-          cd /root/your_project_folder
+          cd student-management-system
           git pull origin main
           docker-compose down
           docker-compose up -d --build
