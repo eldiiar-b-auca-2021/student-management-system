@@ -21,11 +21,11 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-    - name: 🚢 Deploy via SSH
+    - name: Deploy and Restart App
       run: |
-        ssh ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-          cd student-management-system
+        ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+          cd /student-management-system
           git pull origin main
-          docker-compose down
-          docker-compose up -d --build
+          docker compose down
+          docker compose up -d --build
         EOF
