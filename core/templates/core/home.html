@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - Система управления проектами{% endblock %}
+
+{% block content %}
+<style>
+    .jumbotron-fullscreen {
+        height: 100vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                    url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+        background-size: cover;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    .section-title {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+    .section-lead {
+        font-size: 1.25rem;
+    }
+</style>
+
+<header class="bg-dark text-white py-4 mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Система управления проектами</h2>
+        <nav>
+            <a href="{% url 'student_list' %}" class="text-white me-3">Студенты</a>
+            <a href="{% url 'teacher_list' %}" class="text-white me-3">Преподаватели</a>
+            <a href="{% url 'project_list' %}" class="text-white me-3">Проекты</a>
+            <a href="{% url 'topic_list' %}" class="text-white">Темы</a>
+        </nav>
+    </div>
+</header>
+
+<div class="jumbotron-fullscreen">
+    <div class="container">
+        <h1 class="section-title">Добро пожаловать в Систему Управления Проектами</h1>
+        <p class="section-lead">Управляйте студентами, преподавателями, проектами и назначениями эффективно.</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Студенты</h5>
+                    <p class="card-text">Управление всеми записями студентов.</p>
+                    <a href="{% url 'student_list' %}" class="btn btn-primary">Список студентов</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Преподаватели</h5>
+                    <p class="card-text">Управление данными преподавателей и контактами.</p>
+                    <a href="{% url 'teacher_list' %}" class="btn btn-primary">Список преподавателей</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Проекты</h5>
+                    <p class="card-text">Отслеживание деталей проектов и сроков.</p>
+                    <a href="{% url 'project_list' %}" class="btn btn-primary">Список проектов</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Темы</h5>
+                    <p class="card-text">Просмотр и управление темами проектов.</p>
+                    <a href="{% url 'topic_list' %}" class="btn btn-primary">Список тем</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Назначения</h5>
+                    <p class="card-text">Просмотр назначений проектов студентам.</p>
+                    <a href="{% url 'assignment_list' %}" class="btn btn-primary">Назначения</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Оценки</h5>
+                    <p class="card-text">История оценивания проектов.</p>
+                    <a href="{% url 'grade_list' %}" class="btn btn-primary">Список оценок</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Работы</h5>
+                    <p class="card-text">Загруженные файлы и ссылки на проекты.</p>
+                    <a href="{% url 'work_list' %}" class="btn btn-primary">Работы</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer mt-auto py-4 bg-dark text-white">
+    <div class="container text-center">
+        <p class="mb-0">&copy; {{ now|date:"Y" }} Система управления проектами. Все права защищены.</p>
+    </div>
+</footer>
+{% endblock %}

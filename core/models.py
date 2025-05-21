@@ -1,0 +1,72 @@
+from django.db import models
+
+class Student(models.Model):
+    full_name = models.CharField(max_length=255)
+    group = models.CharField(max_length=100)
+    faculty = models.CharField(max_length=100)
+    contacts = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.full_name
+
+
+class Teacher(models.Model):
+    full_name = models.CharField(max_length=255)
+    contacts = models.CharField(max_length=255)
+    department = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.full_name
+
+
+class Topic(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    type = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+    deadline = models.DateTimeField()
+    submission_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.title
+
+
+class ProjectAssignment(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    assigned_date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.student} - {self.project}"
+
+
+class Work(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    file_path = models.CharField(max_length=255)
+    link = models.CharField(max_length=255)
+    upload_date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.project.title} - {self.upload_date}"
+
+
+class Grade(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    grade = models.IntegerField()
+    graded_by = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    grade_date = models.DateTimeField()
+    comments = models.CharField(max_length=500)
+
+    def __str__(self):
+        return f"{self.project.title} - Grade: {self.grade}"

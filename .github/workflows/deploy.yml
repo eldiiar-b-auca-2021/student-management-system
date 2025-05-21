@@ -1,0 +1,31 @@
+name: Deploy Django to VPS via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+    - name: 🚢 Deploy via SSH
+      run: |
+        ssh ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+          cd /root/your_project_folder
+          git pull origin main
+          docker-compose down
+          docker-compose up -d --build
+        EOF

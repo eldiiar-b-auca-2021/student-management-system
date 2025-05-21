@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Список тем{% endblock %}
+{% block header %}Список тем{% endblock %}
+{% block content %}
+<a href="{% url 'topic_create' %}" class="btn btn-success mb-3">Добавить тему</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Активна</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for topic in topics %}
+        <tr>
+            <td>{{ topic.id }}</td>
+            <td>{{ topic.title }}</td>
+            <td>{{ topic.description }}</td>
+            <td>{{ topic.is_active|yesno:"Да,Нет" }}</td>
+            <td>
+                <a href="{% url 'topic_update' topic.id %}" class="btn btn-sm btn-primary">Редактировать</a>
+                <a href="{% url 'topic_delete' topic.id %}" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

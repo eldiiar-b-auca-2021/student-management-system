@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Work List{% endblock %}
+{% block header %}Work List{% endblock %}
+{% block content %}
+<a href="{% url 'work_create' %}" class="btn btn-success mb-3">Add Work</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Project</th>
+            <th>File Path</th>
+            <th>Link</th>
+            <th>Upload Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for work in works %}
+        <tr>
+            <td>{{ work.id }}</td>
+            <td>{{ work.project.title }}</td>
+            <td>{{ work.file_path }}</td>
+            <td><a href="{{ work.link }}" target="_blank">View Link</a></td>
+            <td>{{ work.upload_date }}</td>
+            <td>
+                <a href="{% url 'work_update' work.id %}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="{% url 'work_delete' work.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,36 @@
+{# templates/core/grade_list.html #}
+{% extends 'base.html' %}
+{% block title %}Оценки{% endblock %}
+{% block header %}Список оценок{% endblock %}
+{% block content %}
+<a href="{% url 'grade_create' %}" class="btn btn-success mb-3">Добавить оценку</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Проект</th>
+            <th>Оценка</th>
+            <th>Оценил</th>
+            <th>Дата</th>
+            <th>Комментарии</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.id }}</td>
+            <td>{{ grade.project.title }}</td>
+            <td>{{ grade.grade }}</td>
+            <td>{{ grade.graded_by.full_name }}</td>
+            <td>{{ grade.grade_date }}</td>
+            <td>{{ grade.comments }}</td>
+            <td>
+                <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">Редактировать</a>
+                <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
