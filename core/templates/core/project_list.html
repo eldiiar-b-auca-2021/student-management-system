@@ -3,9 +3,13 @@
 {% block title %}Список проектов{% endblock %}
 {% block header %}Список проектов{% endblock %}
 {% block content %}
-<a href="{% url 'project_create' %}" class="btn btn-success mb-3">Добавить проект</a>
-<table class="table table-bordered">
-    <thead>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
+        <a href="{% url 'project_create' %}" class="btn btn-secondary">➕ Добавить проект</a>
+    </div>
+ 
+    <table class="table table-bordered">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Название</th>
@@ -15,22 +19,22 @@
             <th>Дата сдачи</th>
             <th>Действия</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for project in projects %}
-        <tr>
-            <td>{{ project.id }}</td>
-            <td>{{ project.title }}</td>
-            <td>{{ project.type }}</td>
-            <td>{{ project.status }}</td>
-            <td>{{ project.deadline }}</td>
-            <td>{{ project.submission_date }}</td>
-            <td>
-                <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">Редактировать</a>
-                <a href="{% url 'project_delete' project.id %}" class="btn btn-sm btn-danger">Удалить</a>
-            </td>
-        </tr>
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.title }}</td>
+                <td>{{ project.type }}</td>
+                <td>{{ project.status }}</td>
+                <td>{{ project.deadline }}</td>
+                <td>{{ project.submission_date }}</td>
+                <td>
+                    <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">✏️ Редактировать</a>
+                    <a href="{% url 'project_delete' project.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 {% endblock %}

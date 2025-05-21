@@ -168,7 +168,7 @@ def assignment_delete(request, pk):
 # WORK CRUD
 def work_list(request):
     works = Work.objects.all()
-    return render(request, 'core/work_create.html', {'works': works})
+    return render(request, 'core/work_list.html', {'works': works})
 
 def work_create(request):
     form = WorkForm(request.POST or None)

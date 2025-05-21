@@ -3,7 +3,10 @@
 {% block title %}Оценки{% endblock %}
 {% block header %}Список оценок{% endblock %}
 {% block content %}
-<a href="{% url 'grade_create' %}" class="btn btn-success mb-3">Добавить оценку</a>
+<div class="mb-3 d-flex justify-content-between">
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
+    <a href="{% url 'grade_create' %}" class="btn btn-secondary">➕ Добавить оценку</a>
+</div>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -26,8 +29,8 @@
             <td>{{ grade.grade_date }}</td>
             <td>{{ grade.comments }}</td>
             <td>
-                <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">Редактировать</a>
-                <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">Удалить</a>
+                <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">️✏️ Редактировать</a>
+                <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
             </td>
         </tr>
         {% endfor %}
