@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Delete Teacher{% endblock %}
-{% block header %}Delete Teacher{% endblock %}
+{% block title %}Подтвердить удаление{% endblock %}
+
 {% block content %}
-<p>Are you sure you want to delete "{{ teacher.full_name }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="container mt-5" style="padding-top: 200px">
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-4">Вы уверены, что хотите удалить преподавателя "{{ teacher.full_name }}"?</h2>
+        <form method="post" class="d-flex gap-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">🗑️ Да, удалить</button>
+            <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
 {% endblock %}

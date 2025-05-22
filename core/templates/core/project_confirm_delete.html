@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Подтверждение удаления{% endblock %}
+{% block title %}Подтвердить удаление{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="card z-depth-2" style="margin-top: 40px;">
-    <div class="card-content center-align">
-      <h5>Вы уверены, что хотите удалить проект <strong>"{{ project.title }}"</strong>?</h5>
+<div class="container mt-5" style="padding-top: 200px">
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-4">Вы уверены, что хотите удалить проект "{{ project.title }}"?</h2>
+        <form method="post" class="d-flex gap-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">🗑️ Да, удалить</button>
+            <a href="{% url 'project_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
     </div>
-    <div class="card-action center-align">
-      <form method="post" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn red">Да, удалить</button>
-      </form>
-      <a href="{% url 'project_list' %}" class="btn grey lighten-1">Отмена</a>
-    </div>
-  </div>
 </div>
 {% endblock %}

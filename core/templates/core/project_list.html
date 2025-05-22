@@ -1,43 +1,43 @@
-{# templates/core/project_list.html #}
 {% extends 'base.html' %}
 {% block title %}Список проектов{% endblock %}
-{% block header %}Список проектов{% endblock %}
-{% block content %}
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between mb-3">
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-            <a href="{% url 'project_create' %}" class="btn btn-secondary">➕ Добавить проект</a>
-        </div>
 
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Тип</th>
-                <th>Статус</th>
-                <th>Дедлайн</th>
-                <th>Дата сдачи</th>
-                <th>Действия</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for project in projects %}
-                <tr>
-                    <td>{{ project.id }}</td>
-                    <td>{{ project.title }}</td>
-                    <td>{{ project.type }}</td>
-                    <td>{{ project.status }}</td>
-                    <td>{{ project.deadline }}</td>
-                    <td>{{ project.submission_date }}</td>
-                    <td>
-                        <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">✏️
-                            Редактировать</a>
-                        <a href="{% url 'project_delete' project.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+{% block content %}
+<div class="container mt-4" style="padding-top: 80px;">
+    <h1 class="mb-4">Список проектов</h1>
+
+    <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
+        <a href="{% url 'project_create' %}" class="btn btn-secondary">➕ Добавить проект</a>
     </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Тип</th>
+            <th>Статус</th>
+            <th>Дедлайн</th>
+            <th>Дата сдачи</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.title }}</td>
+                <td>{{ project.type }}</td>
+                <td>{{ project.status }}</td>
+                <td>{{ project.deadline }}</td>
+                <td>{{ project.submission_date }}</td>
+                <td>
+                    <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">✏️ Редактировать</a>
+                    <a href="{% url 'project_delete' project.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Confirm Delete{% endblock %}
+{% block title %}Подтвердить удаление{% endblock %}
+
 {% block content %}
-  <h2>Are you sure you want to delete work for project "{{ work.project.title }}"?</h2>
-  <form method="post">{% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, delete</button>
-    <a href="{% url 'work_list' %}" class="btn btn-secondary">Cancel</a>
-  </form>
+    <div class="container mt-5" style="padding-top: 200px">
+        <div class="card shadow-sm p-4">
+            <h2 class="mb-4">Вы уверены, что хотите удалить работу по проекту "{{ work.project.title }}"?</h2>
+            <form method="post" class="d-flex gap-3">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">🗑️ Да, удалить</button>
+                <a href="{% url 'work_list' %}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
 {% endblock %}

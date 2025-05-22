@@ -1,32 +1,34 @@
 {# Topic List #}
-{% extends 'base.html' %}
-{% block title %}Topic List{% endblock %}
-{% block header %}Topic List{% endblock %}
-{% block content %}
-<a href="{% url 'topic_create' %}" class="btn btn-success mb-3">Add Topic</a>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Is Active</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for topic in topics %}
-    <tr>
-      <td>{{ topic.id }}</td>
-      <td>{{ topic.title }}</td>
-      <td>{{ topic.description }}</td>
-      <td>{{ topic.is_active }}</td>
-      <td>
-        <a href="{% url 'topic_update' topic.id %}" class="btn btn-sm btn-primary">Edit</a>
-        <a href="{% url 'topic_delete' topic.id %}" class="btn btn-sm btn-danger">Delete</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endblock %}
+{#{% extends 'base.html' %}#}
+{#{% block title %}Topic List{% endblock %}#}
+{#{% block header %}Topic List{% endblock %}#}
+{#{% block content %}#}
+{#    <div class="container mt-4" style="padding-top: 200px">#}
+{#        <a href="{% url 'topic_create' %}" class="btn btn-success mb-3">Add Topic</a>#}
+{#        <table class="table table-bordered">#}
+{#            <thead>#}
+{#            <tr>#}
+{#                <th>ID</th>#}
+{#                <th>Title</th>#}
+{#                <th>Description</th>#}
+{#                <th>Is Active</th>#}
+{#                <th>Actions</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            {% for topic in topics %}#}
+{#                <tr>#}
+{#                    <td>{{ topic.id }}</td>#}
+{#                    <td>{{ topic.title }}</td>#}
+{#                    <td>{{ topic.description }}</td>#}
+{#                    <td>{{ topic.is_active }}</td>#}
+{#                    <td>#}
+{#                        <a href="{% url 'topic_update' topic.id %}" class="btn btn-sm btn-primary">Edit</a>#}
+{#                        <a href="{% url 'topic_delete' topic.id %}" class="btn btn-sm btn-danger">Delete</a>#}
+{#                    </td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </div>#}
+{#{% endblock %}#}

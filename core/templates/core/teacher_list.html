@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Список преподавателей{% endblock %}
-{% block header %}Список преподавателей{% endblock %}
+
 {% block content %}
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between mb-3">
+    <div class="container mt-4" style="padding-top: 80px;">
+        <h1 class="mb-4">Список преподавателей</h1>
+        <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
             <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
             <a href="{% url 'teacher_create' %}" class="btn btn-secondary">➕ Добавить преподавателя</a>
         </div>
