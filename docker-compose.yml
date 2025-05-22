@@ -3,7 +3,7 @@ version: '3.9'
 services:
   web:
     build: .
-    command: gunicorn student_project.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn student_project.wsgi:application --bind 0.0.0.0:8000 --workers 3 --threads 2 --timeout 30
     volumes:
       - .:/app
     ports:
@@ -11,6 +11,7 @@ services:
     depends_on:
       - db
     environment:
+      DJANGO_DEBUG: "False"
       POSTGRES_DB: django_db
       POSTGRES_USER: django_user
       POSTGRES_PASSWORD: django_password
