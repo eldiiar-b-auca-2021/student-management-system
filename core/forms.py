@@ -1,5 +1,17 @@
 from django import forms
 from .models import Student, Teacher, Project, Topic, ProjectAssignment, Work, Grade
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class CustomUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        for field_name in ['username', 'password1', 'password2']:
+            self.fields[field_name].help_text = None
+
+    class Meta:
+        model = User
+        fields = ['username', 'password1', 'password2']
 
 class StudentForm(forms.ModelForm):
     class Meta:

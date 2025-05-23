@@ -5,6 +5,9 @@
     <title>{% block title %}Система управления проектами{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
     {% load static %}
     <style>
         body {
@@ -29,22 +32,44 @@
 </head>
 <body>
 
-<header class="text-white py-3 shadow-sm">
-    <div class="container d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-            <img src="https://img.icons8.com/?size=160&id=9nRuLVad2Yr2&format=png" alt="CRM Icon">
-            <h4 class="mb-0 text-white">Проектная система</h4>
+<header class="bg-dark text-white py-3 shadow-sm">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <!-- Logo + Title -->
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+            <img src="https://img.icons8.com/?size=160&id=9nRuLVad2Yr2&format=png" alt="CRM Icon" class="me-2"
+                 style="height: 40px;">
+            <span class="fs-4 fw-bold">Проектная система</span>
         </div>
-        <nav class="d-none d-md-block">
-            <a href="{% url 'home' %}" class="text-white me-3">Домой</a>
-            <a href="{% url 'student_list' %}" class="text-white me-3">Студенты</a>
-            <a href="{% url 'teacher_list' %}" class="text-white me-3">Преподаватели</a>
-            <a href="{% url 'project_list' %}" class="text-white me-3">Проекты</a>
-            <a href="{% url 'topic_list' %}" class="text-white">Темы</a>
-        </nav>
+
+        <!-- Navigation + Auth -->
+        <div class="d-flex align-items-center flex-wrap">
+            <nav class="nav me-4">
+                <a class="nav-link px-2 text-white" href="{% url 'home' %}">Домой</a>
+                <a class="nav-link px-2 text-white" href="{% url 'student_list' %}">Студенты</a>
+                <a class="nav-link px-2 text-white" href="{% url 'teacher_list' %}">Преподаватели</a>
+                <a class="nav-link px-2 text-white" href="{% url 'project_list' %}">Проекты</a>
+                <a class="nav-link px-2 text-white" href="{% url 'topic_list' %}">Темы</a>
+            </nav>
+
+            {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="userDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="d-flex">
+                    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Вход</a>
+                    <a href="{% url 'register' %}" class="btn btn-light text-dark">Регистрация</a>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </header>
-
 
 
 {% block content %}{% endblock %}

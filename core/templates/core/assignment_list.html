@@ -8,8 +8,13 @@
 
         <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
             <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-            <a href="{% url 'assignment_create' %}" class="btn btn-secondary">➕ Добавить назначение</a>
+            {% if not is_student %}
+                <a href="{% url 'assignment_create' %}" class="btn btn-secondary">➕ Добавить назначение</a>
+            {% else %}
+                <span class="text-muted align-self-center">⚠️ У вас нет прав для назначения проектов.</span>
+            {% endif %}
         </div>
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -32,15 +37,19 @@
                     <td>{{ assignment.project.title }}</td>
                     <td>{{ assignment.assigned_date|date:"Y-m-d H:i" }}</td>
                     <td>
-                        <a href="{% url 'assignment_update' assignment.id %}" class="btn btn-sm btn-primary">✏️
-                            Редактировать</a>
-                        <a href="{% url 'assignment_delete' assignment.id %}" class="btn btn-sm btn-danger">🗑️
-                            Удалить</a>
+                        {% if not is_student %}
+                            <a href="{% url 'assignment_update' assignment.id %}" class="btn btn-sm btn-primary">✏️
+                                Редактировать</a>
+                            <a href="{% url 'assignment_delete' assignment.id %}" class="btn btn-sm btn-danger">🗑️
+                                Удалить</a>
+                        {% else %}
+                            <span class="text-muted">Нет доступа</span>
+                        {% endif %}
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="7">Назначения не найдены.</td>
+                    <td colspan="7" class="text-center">Назначения не найдены.</td>
                 </tr>
             {% endfor %}
             </tbody>

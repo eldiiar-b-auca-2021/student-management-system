@@ -2,42 +2,55 @@
 {% block title %}Список проектов{% endblock %}
 
 {% block content %}
-<div class="container mt-4" style="padding-top: 80px;">
-    <h1 class="mb-4">Список проектов</h1>
+    <div class="container mt-4" style="padding-top: 80px;">
+        <h1 class="mb-4">Список проектов</h1>
 
-    <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
-        <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-        <a href="{% url 'project_create' %}" class="btn btn-secondary">➕ Добавить проект</a>
-    </div>
+        <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
+            {% if not is_student %}
+                <a href="{% url 'project_create' %}" class="btn btn-secondary">➕ Добавить проект</a>
+            {% else %}
+                <span class="text-muted align-self-center">⚠️ У вас нет прав для добавления проектов.</span>
+            {% endif %}
+        </div>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Название</th>
-            <th>Тип</th>
-            <th>Статус</th>
-            <th>Дедлайн</th>
-            <th>Дата сдачи</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td>{{ project.id }}</td>
-                <td>{{ project.title }}</td>
-                <td>{{ project.type }}</td>
-                <td>{{ project.status }}</td>
-                <td>{{ project.deadline }}</td>
-                <td>{{ project.submission_date }}</td>
-                <td>
-                    <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">✏️ Редактировать</a>
-                    <a href="{% url 'project_delete' project.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
-                </td>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Тип</th>
+                <th>Статус</th>
+                <th>Дедлайн</th>
+                <th>Дата сдачи</th>
+                <th>Действия</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td>{{ project.id }}</td>
+                    <td>{{ project.title }}</td>
+                    <td>{{ project.type }}</td>
+                    <td>{{ project.status }}</td>
+                    <td>{{ project.deadline }}</td>
+                    <td>{{ project.submission_date }}</td>
+                    <td>
+                        {% if not is_student %}
+                            <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">✏️
+                                Редактировать</a>
+                            <a href="{% url 'project_delete' project.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% else %}
+                            <span class="text-muted">Нет доступа</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">Проекты не найдены.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

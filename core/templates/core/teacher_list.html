@@ -4,9 +4,15 @@
 {% block content %}
     <div class="container mt-4" style="padding-top: 80px;">
         <h1 class="mb-4">Список преподавателей</h1>
+
         <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
             <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-            <a href="{% url 'teacher_create' %}" class="btn btn-secondary">➕ Добавить преподавателя</a>
+
+            {% if not is_student %}
+                <a href="{% url 'teacher_create' %}" class="btn btn-secondary">➕ Добавить преподавателя</a>
+            {% else %}
+                <span class="text-muted align-self-center">⚠️ У вас нет прав для добавления преподавателей.</span>
+            {% endif %}
         </div>
 
         <table class="table table-bordered">
@@ -27,10 +33,18 @@
                     <td>{{ teacher.contacts }}</td>
                     <td>{{ teacher.department }}</td>
                     <td>
-                        <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-sm btn-primary">✏️
-                            Редактировать</a>
-                        <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% if not is_student %}
+                            <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-sm btn-primary">✏️
+                                Редактировать</a>
+                            <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% else %}
+                            <span class="text-muted">Нет доступа</span>
+                        {% endif %}
                     </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Преподаватели не найдены.</td>
                 </tr>
             {% endfor %}
             </tbody>

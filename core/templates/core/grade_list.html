@@ -1,4 +1,3 @@
-{# templates/core/grade_list.html #}
 {% extends 'base.html' %}
 {% block title %}Оценки{% endblock %}
 {% block content %}
@@ -7,8 +6,13 @@
 
         <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
             <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-            <a href="{% url 'grade_create' %}" class="btn btn-secondary">➕ Добавить оценку</a>
+            {% if not is_student %}
+                <a href="{% url 'grade_create' %}" class="btn btn-secondary">➕ Добавить оценку</a>
+            {% else %}
+                <span class="text-muted align-self-center">⚠️ У вас нет прав для добавления оценок.</span>
+            {% endif %}
         </div>
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -31,9 +35,17 @@
                     <td>{{ grade.grade_date }}</td>
                     <td>{{ grade.comments }}</td>
                     <td>
-                        <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">️✏️ Редактировать</a>
-                        <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% if not is_student %}
+                            <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">️✏️ Редактировать</a>
+                            <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% else %}
+                            <span class="text-muted">Нет доступа</span>
+                        {% endif %}
                     </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">Оценки не найдены.</td>
                 </tr>
             {% endfor %}
             </tbody>

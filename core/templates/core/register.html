@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <div class="container mt-5" style="max-width: 500px; padding-top: 150px;">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Создание аккаунта</h3>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-success w-100">Зарегистрироваться</button>
+                </form>
+
+                <p class="mt-3 text-center">
+                    Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,8 +6,14 @@
         <h1 class="mb-4">Список тем</h1>
         <div class="d-flex justify-content-between mb-3" style="margin-top: 20px">
             <a href="{% url 'home' %}" class="btn btn-outline-secondary">🏠 На главную</a>
-            <a href="{% url 'topic_create' %}" class="btn btn-secondary">➕ Добавить тему</a>
+
+            {% if not is_student %}
+                <a href="{% url 'topic_create' %}" class="btn btn-secondary">➕ Добавить тему</a>
+            {% else %}
+                <span class="text-muted align-self-center">⚠️ Вы можете только просматривать.</span>
+            {% endif %}
         </div>
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -26,9 +32,18 @@
                     <td>{{ topic.description }}</td>
                     <td>{{ topic.is_active|yesno:"Да,Нет" }}</td>
                     <td>
-                        <a href="{% url 'topic_update' topic.id %}" class="btn btn-sm btn-primary">✏️ Редактировать</a>
-                        <a href="{% url 'topic_delete' topic.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% if not is_student %}
+                            <a href="{% url 'topic_update' topic.id %}" class="btn btn-sm btn-primary">✏️
+                                Редактировать</a>
+                            <a href="{% url 'topic_delete' topic.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
+                        {% else %}
+                            <span class="text-muted">Нет доступа</span>
+                        {% endif %}
                     </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Темы не найдены.</td>
                 </tr>
             {% endfor %}
             </tbody>

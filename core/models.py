@@ -1,6 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     full_name = models.CharField(max_length=255)
     group = models.CharField(max_length=100)
     faculty = models.CharField(max_length=100)
@@ -11,6 +13,7 @@ class Student(models.Model):
 
 
 class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     full_name = models.CharField(max_length=255)
     contacts = models.CharField(max_length=255)
     department = models.CharField(max_length=100)
