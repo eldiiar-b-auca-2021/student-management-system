@@ -1,7 +1,8 @@
 from django import forms
-from .models import Student, Teacher, Project, Topic, ProjectAssignment, Work, Grade
+from .models import Student, Teacher, Topic, ProjectAssignment, Work, Grade
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
 
 class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
@@ -12,6 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
 
 class StudentForm(forms.ModelForm):
     class Meta:
@@ -29,6 +31,7 @@ class StudentForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'form-control'})
 
+
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
@@ -44,34 +47,36 @@ class TeacherForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'form-control'})
 
-class ProjectForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = '__all__'
-        labels = {
-            'title': 'Название проекта',
-            'description': 'Описание',
-            'type': 'Тип проекта',
-            'status': 'Статус',
-            'deadline': 'Крайний срок',
-            'submission_date': 'Дата сдачи',
-        }
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название проекта'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Описание проекта'}),
-            'type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тип проекта'}),
-            'status': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Статус проекта'}),
-            'deadline': forms.DateTimeInput(attrs={
-                'class': 'form-control',
-                'type': 'datetime-local',
-                'placeholder': 'Крайний срок'
-            }),
-            'submission_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
-                'type': 'datetime-local',
-                'placeholder': 'Дата сдачи'
-            }),
-        }
+
+# class ProjectForm(forms.ModelForm):
+#     class Meta:
+#         model = Project
+#         fields = '__all__'
+#         labels = {
+#             'title': 'Название проекта',
+#             'description': 'Описание',
+#             'type': 'Тип проекта',
+#             'status': 'Статус',
+#             'deadline': 'Крайний срок',
+#             'submission_date': 'Дата сдачи',
+#         }
+#         widgets = {
+#             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название проекта'}),
+#             'description': forms.Textarea(
+#                 attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Описание проекта'}),
+#             'type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тип проекта'}),
+#             'status': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Статус проекта'}),
+#             'deadline': forms.DateTimeInput(attrs={
+#                 'class': 'form-control',
+#                 'type': 'datetime-local',
+#                 'placeholder': 'Крайний срок'
+#             }),
+#             'submission_date': forms.DateTimeInput(attrs={
+#                 'class': 'form-control',
+#                 'type': 'datetime-local',
+#                 'placeholder': 'Дата сдачи'
+#             }),
+#         }
 
 
 class TopicForm(forms.ModelForm):
@@ -85,19 +90,20 @@ class TopicForm(forms.ModelForm):
         }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите название темы'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Введите описание'}),
+            'description': forms.Textarea(
+                attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Введите описание'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
 
 class ProjectAssignmentForm(forms.ModelForm):
     class Meta:
         model = ProjectAssignment
-        fields = '__all__'
+        exclude = ['project']
         labels = {
             'student': 'Студент',
             'teacher': 'Преподаватель',
             'topic': 'Тема',
-            'project': 'Проект',
             'assigned_date': 'Дата назначения',
         }
         widgets = {
@@ -105,6 +111,7 @@ class ProjectAssignmentForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'datetime-local'
             }),
+
         }
 
 
@@ -113,7 +120,7 @@ class WorkForm(forms.ModelForm):
         model = Work
         fields = '__all__'
         labels = {
-            'project': 'Проект',
+            # 'project': 'Проект',
             'file_path': 'Путь к файлу',
             'link': 'Ссылка на работу',
             'upload_date': 'Дата загрузки',
@@ -131,7 +138,7 @@ class GradeForm(forms.ModelForm):
         model = Grade
         fields = '__all__'
         labels = {
-            'project': 'Проект',
+            # 'project': 'Проект',
             'grade': 'Оценка',
             'graded_by': 'Оценил',
             'grade_date': 'Дата оценки',
@@ -143,4 +150,3 @@ class GradeForm(forms.ModelForm):
                 'type': 'datetime-local'
             }),
         }
-

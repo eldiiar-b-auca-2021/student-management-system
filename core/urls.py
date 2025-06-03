@@ -16,10 +16,10 @@ urlpatterns = [
     path('teachers/delete/<int:pk>/', views.teacher_delete, name='teacher_delete'),
 
     # Project URLs
-    path('projects/', views.project_list, name='project_list'),
-    path('projects/create/', views.project_create, name='project_create'),
-    path('projects/<int:pk>/edit/', views.project_update, name='project_update'),
-    path('projects/<int:pk>/delete/', views.project_delete, name='project_delete'),
+    # path('projects/', views.project_list, name='project_list'),
+    # path('projects/create/', views.project_create, name='project_create'),
+    # path('projects/<int:pk>/edit/', views.project_update, name='project_update'),
+    # path('projects/<int:pk>/delete/', views.project_delete, name='project_delete'),
 
     # Topic URLs
     path('topics/', views.topic_list, name='topic_list'),

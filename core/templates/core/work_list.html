@@ -14,7 +14,7 @@
             <thead class="table-light">
             <tr>
                 <th>ID</th>
-                <th>Проект</th>
+                <th>Фио Студента</th>
                 <th>Путь к файлу</th>
                 <th>Ссылка</th>
                 <th>Дата загрузки</th>
@@ -25,7 +25,7 @@
             {% for work in works %}
                 <tr>
                     <td>{{ work.id }}</td>
-                    <td>{{ work.project.title }}</td>
+                    <td>{{ work.student.full_name }}</td>
                     <td>{{ work.file_path }}</td>
                     <td>
                         <a href="{{ work.link }}" target="_blank" class="btn btn-sm btn-outline-info">🌐 Открыть</a>

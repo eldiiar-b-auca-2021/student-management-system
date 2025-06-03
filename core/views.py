@@ -1,8 +1,8 @@
 # views.py
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Project, Topic, ProjectAssignment, Work, Grade, Student, Teacher
-from .forms import ProjectForm, TopicForm, ProjectAssignmentForm, WorkForm, GradeForm, StudentForm, TeacherForm
+from .models import Topic, ProjectAssignment, Work, Grade, Student, Teacher
+from .forms import TopicForm, ProjectAssignmentForm, WorkForm, GradeForm, StudentForm, TeacherForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
@@ -15,10 +15,8 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-
             student_group, created = Group.objects.get_or_create(name='Students')
             user.groups.add(student_group)
-
             login(request, user)
             return redirect('home')
     else:
@@ -31,7 +29,6 @@ def home(request):
     sections = [
         {'title': 'Студенты', 'desc': 'Управление всеми записями студентов.', 'url': 'student_list'},
         {'title': 'Преподаватели', 'desc': 'Управление данными преподавателей и контактами.', 'url': 'teacher_list'},
-        {'title': 'Проекты', 'desc': 'Отслеживание деталей проектов и сроков.', 'url': 'project_list'},
         {'title': 'Темы', 'desc': 'Просмотр и управление темами проектов.', 'url': 'topic_list'},
         {'title': 'Назначения', 'desc': 'Просмотр назначений проектов студентам.', 'url': 'assignment_list'},
         {'title': 'Оценки', 'desc': 'История оценивания проектов.', 'url': 'grade_list'},
@@ -52,38 +49,38 @@ def group_required(*group_names):
     return decorator
 
 
-@group_required('Admins', 'Teachers', 'Students')
-def project_list(request):
-    projects = Project.objects.all()
-    return render(request, 'core/project_list.html', {'projects': projects})
+# @group_required('Admins', 'Teachers', 'Students')
+# def project_list(request):
+#     projects = Project.objects.all()
+#     return render(request, 'core/project_list.html', {'projects': projects})
 
 
-@group_required('Admins', 'Teachers', 'Students')
-def project_create(request):
-    form = ProjectForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('project_list')
-    return render(request, 'core/project_form.html', {'form': form})
+# @group_required('Admins', 'Teachers', 'Students')
+# def project_create(request):
+#     form = ProjectForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('project_list')
+#     return render(request, 'core/project_form.html', {'form': form})
+#
 
+# @group_required('Admins', 'Teachers', 'Students')
+# def project_update(request, pk):
+#     project = get_object_or_404(Project, pk=pk)
+#     form = ProjectForm(request.POST or None, instance=project)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('project_list')
+#     return render(request, 'core/project_form.html', {'form': form})
+#
 
-@group_required('Admins', 'Teachers', 'Students')
-def project_update(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    form = ProjectForm(request.POST or None, instance=project)
-    if form.is_valid():
-        form.save()
-        return redirect('project_list')
-    return render(request, 'core/project_form.html', {'form': form})
-
-
-@group_required('Admins', 'Teachers', 'Students')
-def project_delete(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    if request.method == 'POST':
-        project.delete()
-        return redirect('project_list')
-    return render(request, 'core/project_confirm_delete.html', {'project': project})
+# @group_required('Admins', 'Teachers', 'Students')
+# def project_delete(request, pk):
+#     project = get_object_or_404(Project, pk=pk)
+#     if request.method == 'POST':
+#         project.delete()
+#         return redirect('project_list')
+#     return render(request, 'core/project_confirm_delete.html', {'project': project})
 
 
 @group_required('Admins', 'Teachers', 'Students')

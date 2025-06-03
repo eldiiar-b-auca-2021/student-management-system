@@ -17,7 +17,8 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Проект</th>
+                <th>Тема</th>
+                <th>Студент</th>
                 <th>Оценка</th>
                 <th>Оценил</th>
                 <th>Дата</th>
@@ -29,14 +30,16 @@
             {% for grade in grades %}
                 <tr>
                     <td>{{ grade.id }}</td>
-                    <td>{{ grade.project.title }}</td>
+                    <td>{{ grade.work.topic }}</td>
+                    <td>{{ grade.work.student }}</td>
                     <td>{{ grade.grade }}</td>
                     <td>{{ grade.graded_by.full_name }}</td>
                     <td>{{ grade.grade_date }}</td>
                     <td>{{ grade.comments }}</td>
                     <td>
                         {% if not is_student %}
-                            <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">️✏️ Редактировать</a>
+                            <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">️✏️
+                                Редактировать</a>
                             <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
                         {% else %}
                             <span class="text-muted">Нет доступа</span>

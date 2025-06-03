@@ -57,7 +57,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'student_project.wsgi.application'
 
-# DATABASE (PostgreSQL with Docker env support)
+#DATABASE (PostgreSQL with Docker env support)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
