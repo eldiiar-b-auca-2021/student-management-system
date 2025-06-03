@@ -67,7 +67,7 @@ class Work(models.Model):
 
 
 class Grade(models.Model):
-    work = models.ForeignKey(Work, on_delete=models.CASCADE)
+    work = models.ForeignKey('Work', on_delete=models.CASCADE, null=True, blank=True)
     grade = models.IntegerField()
     graded_by = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     grade_date = models.DateTimeField()
