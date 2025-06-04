@@ -48,6 +48,10 @@
                 <a class="nav-link px-2 text-white" href="{% url 'student_list' %}">Студенты</a>
                 <a class="nav-link px-2 text-white" href="{% url 'teacher_list' %}">Преподаватели</a>
                 <a class="nav-link px-2 text-white" href="{% url 'topic_list' %}">Темы</a>
+                <a class="nav-link px-2 text-white" href="{% url 'project_list' %}">Проекты</a>
+                <a class="nav-link px-2 text-white" href="{% url 'assignment_list' %}">Назначения</a>
+                <a class="nav-link px-2 text-white" href="{% url 'work_list' %}">Работы</a>
+                <a class="nav-link px-2 text-white" href="{% url 'grade_list' %}">Оценки</a>
             </nav>
 
             {% if user.is_authenticated %}

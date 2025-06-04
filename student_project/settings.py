@@ -57,7 +57,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'student_project.wsgi.application'
 
-#DATABASE (PostgreSQL with Docker env support)
+# DATABASE (PostgreSQL with Docker env support)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -93,10 +93,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'  # for user-uploaded files
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# # Whitenoise compression (optional, fast in Docker)
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # DEFAULT AUTO FIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

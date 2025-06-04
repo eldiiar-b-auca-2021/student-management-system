@@ -16,7 +16,7 @@
         </div>
 
         <table class="table table-bordered">
-            <thead>
+            <thead class="table-light">
             <tr>
                 <th>ID</th>
                 <th>Студент</th>
@@ -31,9 +31,10 @@
             {% for assignment in assignments %}
                 <tr>
                     <td>{{ assignment.id }}</td>
-                    <td>{{ assignment.student.full_name }}</td>
+                    <td>{{ assignment.student.full_name }} ({{ assignment.student.group }})</td>
                     <td>{{ assignment.teacher.full_name }}</td>
                     <td>{{ assignment.topic.title }}</td>
+                    <td>{{ assignment.project.get_type_display }}</td>
                     <td>{{ assignment.assigned_date|date:"Y-m-d H:i" }}</td>
                     <td>
                         {% if not is_student %}

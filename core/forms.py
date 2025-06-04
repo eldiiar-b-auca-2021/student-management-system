@@ -1,152 +1,171 @@
+# core/forms.py
 from django import forms
-from .models import Student, Teacher, Topic, ProjectAssignment, Work, Grade
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from .models import (
+    Student, Teacher, Topic, Project, Assignment, Work, Grade
+)
 
+# ───────────────────────────────
+# 1. Auth
+# ───────────────────────────────
 class CustomUserCreationForm(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        for field_name in ['username', 'password1', 'password2']:
-            self.fields[field_name].help_text = None
-
+    """Подчистили help-text, оставили только username / password."""
     class Meta:
-        model = User
-        fields = ['username', 'password1', 'password2']
+        model  = User
+        fields = ('username', 'password1', 'password2')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for f in ['username', 'password1', 'password2']:
+            self.fields[f].help_text = None
+            self.fields[f].widget.attrs.update({'class': 'form-control'})
+
+
+# ───────────────────────────────
+# 2. Core directory (students / teachers)
+# ───────────────────────────────
+def _bootstrap(form):
+    """Маленький миксин для единого оформления."""
+    for field in form.fields.values():
+        if not isinstance(field.widget, forms.CheckboxInput):
+            field.widget.attrs.setdefault('class', 'form-control')
+    return form
 
 class StudentForm(forms.ModelForm):
     class Meta:
-        model = Student
-        fields = '__all__'
+        model  = Student
+        exclude = ('user',)            # user связываем отдельно
         labels = {
             'full_name': 'Полное имя',
-            'group': 'Группа',
-            'faculty': 'Факультет',
-            'contacts': 'Контакты',
+            'group':     'Группа',
+            'faculty':   'Факультет',
+            'contacts':  'Контакты',
         }
-
-    def __init__(self, *args, **kwargs):
-        super(StudentForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
-
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)
 
 class TeacherForm(forms.ModelForm):
     class Meta:
-        model = Teacher
-        fields = '__all__'
+        model  = Teacher
+        exclude = ('user',)
         labels = {
-            'full_name': 'Полное имя',
-            'contacts': 'Контакты',
+            'full_name':  'Полное имя',
             'department': 'Кафедра',
+            'contacts':   'Контакты',
         }
-
-    def __init__(self, *args, **kwargs):
-        super(TeacherForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)
 
 
-# class ProjectForm(forms.ModelForm):
-#     class Meta:
-#         model = Project
-#         fields = '__all__'
-#         labels = {
-#             'title': 'Название проекта',
-#             'description': 'Описание',
-#             'type': 'Тип проекта',
-#             'status': 'Статус',
-#             'deadline': 'Крайний срок',
-#             'submission_date': 'Дата сдачи',
-#         }
-#         widgets = {
-#             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название проекта'}),
-#             'description': forms.Textarea(
-#                 attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Описание проекта'}),
-#             'type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тип проекта'}),
-#             'status': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Статус проекта'}),
-#             'deadline': forms.DateTimeInput(attrs={
-#                 'class': 'form-control',
-#                 'type': 'datetime-local',
-#                 'placeholder': 'Крайний срок'
-#             }),
-#             'submission_date': forms.DateTimeInput(attrs={
-#                 'class': 'form-control',
-#                 'type': 'datetime-local',
-#                 'placeholder': 'Дата сдачи'
-#             }),
-#         }
-
-
+# ───────────────────────────────
+# 3. Topic
+# ───────────────────────────────
 class TopicForm(forms.ModelForm):
     class Meta:
-        model = Topic
+        model  = Topic
         fields = '__all__'
         labels = {
-            'title': 'Название темы',
+            'title':       'Название темы',
             'description': 'Описание',
-            'is_active': 'Активна',
+            'is_active':   'Активна',
         }
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите название темы'}),
-            'description': forms.Textarea(
-                attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Введите описание'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'title':       forms.TextInput(attrs={'placeholder': 'Введите название'}),
+            'description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Введите описание'}),
+            'is_active':   forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)
 
 
-class ProjectAssignmentForm(forms.ModelForm):
+# ───────────────────────────────
+# 4. Project
+# ───────────────────────────────
+class ProjectForm(forms.ModelForm):
     class Meta:
-        model = ProjectAssignment
-        exclude = ['project']
+        model  = Project
+        fields = ('title', 'description', 'type', 'status', 'deadline')
         labels = {
-            'student': 'Студент',
-            'teacher': 'Преподаватель',
-            'topic': 'Тема',
+            'title':       'Название проекта',
+            'description': 'Описание',
+            'type':        'Тип',
+            'status':      'Статус',
+            'deadline':    'Крайний срок',
+        }
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 4}),
+            'deadline':    forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)
+
+
+# ───────────────────────────────
+# 5. Assignment  (student ↔ project)
+# ───────────────────────────────
+class AssignmentForm(forms.ModelForm):
+    class Meta:
+        model  = Assignment
+        fields = ('student', 'teacher', 'project', 'topic', 'assigned_date')
+        labels = {
+            'student':       'Студент',
+            'teacher':       'Преподаватель',
+            'project':       'Проект',
+            'topic':         'Тема',
             'assigned_date': 'Дата назначения',
         }
         widgets = {
-            'assigned_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
-                'type': 'datetime-local'
-            }),
-
+            'assigned_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)
+        # Показываем только активные темы
+        self.fields['topic'].queryset = Topic.objects.filter(is_active=True)
 
 
+# ───────────────────────────────
+# 6. Work   (file || link)
+# ───────────────────────────────
 class WorkForm(forms.ModelForm):
     class Meta:
-        model = Work
-        fields = '__all__'
+        model  = Work
+        fields = ('assignment', 'title', 'file', 'link')
         labels = {
-            # 'project': 'Проект',
-            'file_path': 'Путь к файлу',
-            'link': 'Ссылка на работу',
-            'upload_date': 'Дата загрузки',
+            'assignment': 'Назначение',
+            'title':      'Название работы',
+            'file':       'Файл',
+            'link':       'Ссылка',
         }
         widgets = {
-            'upload_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
-                'type': 'datetime-local'
-            }),
+            'link': forms.URLInput(attrs={'placeholder': 'https://…'}),
         }
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)
+
+    def clean(self):
+        cleaned = super().clean()
+        if not cleaned.get('file') and not cleaned.get('link'):
+            raise forms.ValidationError('Нужно загрузить файл или указать ссылку.')
+        return cleaned
 
 
+# ───────────────────────────────
+# 7. Grade  (teacher evaluates work)
+# ───────────────────────────────
 class GradeForm(forms.ModelForm):
+    """`graded_by` и `grade_date` заполняются во view, поэтому скрываем."""
     class Meta:
-        model = Grade
-        fields = '__all__'
+        model  = Grade
+        fields = ('work', 'grade', 'comments')
         labels = {
-            # 'project': 'Проект',
-            'grade': 'Оценка',
-            'graded_by': 'Оценил',
-            'grade_date': 'Дата оценки',
-            'comments': 'Комментарии',
+            'work':     'Работа',
+            'grade':    'Оценка',
+            'comments': 'Комментарий',
         }
         widgets = {
-            'grade_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
-                'type': 'datetime-local'
-            }),
+            'comments': forms.Textarea(attrs={'rows': 3}),
         }
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw); _bootstrap(self)

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %}Оценки{% endblock %}
+
 {% block content %}
     <div class="container mt-4" style="padding-top: 80px;">
         <h1 class="mb-4">Список оценок</h1>
@@ -13,45 +15,50 @@
             {% endif %}
         </div>
 
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Тема</th>
-                <th>Студент</th>
-                <th>Оценка</th>
-                <th>Оценил</th>
-                <th>Дата</th>
-                <th>Комментарии</th>
-                <th>Действия</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for grade in grades %}
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
                 <tr>
-                    <td>{{ grade.id }}</td>
-                    <td>{{ grade.work.topic }}</td>
-                    <td>{{ grade.work.student }}</td>
-                    <td>{{ grade.grade }}</td>
-                    <td>{{ grade.graded_by.full_name }}</td>
-                    <td>{{ grade.grade_date }}</td>
-                    <td>{{ grade.comments }}</td>
-                    <td>
-                        {% if not is_student %}
-                            <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">️✏️
-                                Редактировать</a>
-                            <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">🗑️ Удалить</a>
-                        {% else %}
-                            <span class="text-muted">Нет доступа</span>
-                        {% endif %}
-                    </td>
+                    <th>#</th>
+                    <th>Проект</th>
+                    <th>Студент</th>
+                    <th>Оценка</th>
+                    <th>Оценил</th>
+                    <th>Дата</th>
+                    <th>Комментарий</th>
+                    <th class="text-end">Действия</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="7" class="text-center">Оценки не найдены.</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for grade in grades %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ grade.work.assignment.project.title }}</td>
+                        <
+                        <td>{{ grade.work.assignment.student.full_name }} ({{ grade.work.assignment.student.group }})
+                        </td>
+                        <td>{{ grade.grade }}</td>
+                        <td>
+                            {{ grade.graded_by.full_name|default:"—" }}
+                        </td>
+                        <td>{{ grade.grade_date|date:"Y-m-d H:i" }}</td>
+                        <td>{{ grade.comments|default:"—" }}</td>
+                        <td class="text-end">
+                            {% if not is_student %}
+                                <a href="{% url 'grade_update' grade.id %}" class="btn btn-sm btn-primary">✏️</a>
+                                <a href="{% url 'grade_delete' grade.id %}" class="btn btn-sm btn-danger">🗑️</a>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">Оценки не найдены.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
