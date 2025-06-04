@@ -22,7 +22,7 @@
                 <th>Тип</th>
                 <th>Статус</th>
                 <th>Дедлайн</th>
-                <th>Дата сдачи</th>
+{#                <th>Дата сдачи</th>#}
                 <th>Действия</th>
             </tr>
             </thead>
@@ -34,7 +34,7 @@
                     <td>{{ project.get_type_display }}</td>
                     <td>{{ project.get_status_display }}</td>
                     <td>{{ project.deadline|date:"d E Y" }}</td>
-                    <td>{{ project.submission_date|default:"—" }}</td>
+{#                    <td>{{ project.submission_date|default:"—" }}</td>#}
                     <td>
                         {% if not is_student %}
                             <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-primary">✏️

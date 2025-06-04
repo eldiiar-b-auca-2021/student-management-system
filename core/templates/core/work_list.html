@@ -19,7 +19,7 @@
                     <th>Проект</th>
                     <th>Студент</th>
                     <th>Название работы</th>
-                    <th>Файл</th>
+{#                    <th>Файл</th>#}
                     <th>Ссылка</th>
                     <th>Дата загрузки</th>
                     <th class="text-end">Действия</th>
@@ -33,14 +33,14 @@
                         <td>{{ work.assignment.student.full_name }} ({{ work.assignment.student.group }})</td>
                         <td>{{ work.title|default:"—" }}</td>
 
-                        <td>
-                            {% if work.file %}
-                                <a href="{{ work.file.url }}" class="btn btn-sm btn-outline-success" target="_blank">📄
-                                    Скачать</a>
-                            {% else %}
-                                <span class="text-muted">—</span>
-                            {% endif %}
-                        </td>
+{#                        <td>#}
+{#                            {% if work.file %}#}
+{#                                <a href="{{ work.file.url }}" class="btn btn-sm btn-outline-success" target="_blank">📄#}
+{#                                    Скачать</a>#}
+{#                            {% else %}#}
+{#                                <span class="text-muted">—</span>#}
+{#                            {% endif %}#}
+{#                        </td>#}
 
                         <td>
                             {% if work.link %}
